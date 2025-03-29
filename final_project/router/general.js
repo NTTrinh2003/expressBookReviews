@@ -21,20 +21,21 @@ public_users.post("/register", (req,res) => {
   }
 });
 
+async function getBooks() {
+  try {
+    return await Promise.resolve(books);
+  } catch (err) {
+    console.error('Error getting products: ',err);
+    throw err;
+  }
+}
+
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-  let response = new Promise((resolve, reject) => {
-    resolve(books);
-  })
-
-  response.then(bookList => {
+  (async () => {
+    const bookList = await getBooks();
     return res.status(200).json(bookList);
-  }).catch((err) => {
-    return res.status(500).json({ 
-      message: "Error fetching books" ,
-      error: err.message,
-    });
-  });
+  })();
 });
 
 // Get book details based on ISBN
@@ -118,24 +119,6 @@ public_users.get('/review/:isbn',function (req, res) {
   }).catch((err) => {
     return res.status(404).json({ message: "Book not found" });
   })
-
-  // const isbn = req.params.isbn;
-
-  // axios({
-  //   method: 'GET',
-  //   adapter: () => {
-  //     return Promise.resolve(books[isbn].reviews);
-  //   }
-  // }).then((response) => {
-  //   let data = response.data || response;
-  //   delete data.headers;
-  //   return res.status(200).json(data);
-  // }).catch((err) => {
-  //   return res.status(500).json({ 
-  //     message: "Error fetching reviews for book " + isbn,
-  //     error: err.message,
-  //   });
-  // })
 });
 
 module.exports.general = public_users;
