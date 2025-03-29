@@ -1,7 +1,8 @@
 # Express Books Preview  
 - This is the final backend study project for the IBM Backend Apps with Node.js and Express Course  
 - Use only for adding/removing books reviews, also for viewing books to reviews (Simple enough :)))
-- Usage:  
+- Usage:
+  - Before using it, install npm then npm install
   - GET localhost:5000/ -> View all books  
   - GET localhost:5000/isbn/:isbn -> View certain books with isbn  
   - GET localhost:5000/author/:author -> View certain books with author's name  
